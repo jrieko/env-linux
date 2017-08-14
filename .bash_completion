@@ -1,0 +1,62 @@
+#!/bin/bash
+debug "file: ${BASH_SOURCE[0]}"
+
+_alias_completion() {
+  local cmd alias completion
+  alias=$1
+  cmd=$2
+
+  # check if there's already a completion function for the alias
+  completion="$(complete -p $alias 2>/dev/null)"
+  debug "[alias=$1, cmd=$2] alias: $completion"
+  if [[ -z $completion ]]; then
+    # else get the target command's completion function
+    completion="$(complete -p $cmd 2>/dev/null)"
+    debug "[alias=$1, cmd=$2] cmd: $completion"
+  fi
+  if [[ -z $completion ]]; then
+    # dynamic loader hasn't loaded this cmd yet
+    _completion_loader "$cmd"
+    completion="$(complete -p $cmd 2>/dev/null)"
+    debug "[alias=$1, cmd=$2] load: $completion"
+  fi
+
+  # ensure completion function was found
+  if [[ -z $completion ]]; then
+    echo.err "Alias completion not found. [$alias, $cmd]"
+    return 10
+  fi
+
+  # configure completion function for the alias
+  eval "$(sed "s/$cmd\$/$alias/" <<< "$completion")"
+}
+export -f _alias_completion
+
+# do user's after so it can reference system comps
+if [ -d ~/.bash_completion.d ]; then
+  for f in $(find ~/.bash_completion.d -type f); do
+    mime_type="$(file -i $f | cut -d' ' -f2)"
+    [ -r $f ] && [[ $mime_type =~ ^text/(x-shellscript|plain)\;$ ]] && . $f
+  done
+  unset f
+fi
+
+# Explicit defs
+_alias_completion "l" "ls"
+_alias_completion ".which" "which"
+_alias_completion "du.large" "du"
+_alias_completion "sc" "systemctl"
+
+# Implicitly define remaining aliases
+ifs_bak="$IFS"
+IFS=$'\n'
+for c in $(alias -p); do
+  if [[ "$c" =~ $REGEX_ALIAS ]]; then
+    _alias_completion ${BASH_REMATCH[1]} ${BASH_REMATCH[2]}
+  else
+    debug "nope: $c"
+  fi
+done
+# reset
+IFS="$ifs_bak"
+

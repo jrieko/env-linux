@@ -1,0 +1,3 @@
+debug "file: ${BASH_SOURCE[0]}"
+alias mount.gdrive="google-drive-ocamlfuse $(xdg-user-dir DOCUMENTS)"
+alias umount.gdrive="fusermount -u $(xdg-user-dir DOCUMENTS)"

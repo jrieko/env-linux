@@ -1,0 +1,14 @@
+#!/bin/bash
+
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+
+alias vim="vim -o"
+alias less="less -R"
+#alias cp="rsync -avh --progress"
+
+alias vim.bash=". ~/bin/.vim.bash"
+alias vim.which=".which vim"
+alias l.which=".which l"

@@ -1,0 +1,7 @@
+#!/bin/bash
+debug "file: ${BASH_SOURCE[0]}"
+_includeComp() {
+  local cur=${COMP_WORDS[COMP_CWORD]}
+  COMPREPLY=( $(compgen -W "$(ls -A $include_dir)" -- $cur) )
+}
+complete -F _includeComp include
