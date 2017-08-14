@@ -1,0 +1,29 @@
+#!/bin/bash
+debug "file: ${BASH_SOURCE[0]}"
+
+error_usage=1
+
+usage() {
+  echo "usage: $(basename $0)"
+}
+
+exit.usage() {
+  usage
+  exit $error_usage
+}
+
+exit.help() {
+  usage
+  exit 0
+}
+
+# ($#, int min_args, optional int max_args)
+script.validate_args() {
+  [ $1 -lt $2 ] && exit.usage
+  [ -n "$3" ] && [ $1 -gt $3 ] && exit.usage
+}
+
+# (all_args*)
+script.process_args() {
+  [ "$1" == "-h" ] || [ "$1" == "--help" ] && exit.help
+}

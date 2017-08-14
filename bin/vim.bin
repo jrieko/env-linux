@@ -1,0 +1,22 @@
+#!/bin/bash -i
+
+include script
+
+usage() {
+  echo "usage: $(basename $0) <script name>"
+}
+
+exit.help() {
+  echo "Edit a new script in ~/bin/ and set it executable"
+  echo ""
+  usage
+  exit 0
+}
+
+script.validate_args 1
+script.process_args $@
+
+target="$(readlink -f ~/bin)/$1"
+shift
+
+vim $target $@ && [ -N $target ] && chmod +x $target

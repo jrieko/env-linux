@@ -1,0 +1,6 @@
+#!/bin/bash
+
+include_resolve $@ > /dev/null
+[ $? == 0 ] || exit $?
+
+. $(include_resolve $@)
