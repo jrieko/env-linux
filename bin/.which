@@ -1,12 +1,11 @@
 #!/bin/bash -i
-
 debug "file: ${BASH_SOURCE[0]}"
 include script
 
 error_404=254
 
 usage() {
-  echo "usage: $(basename $0) <command> <which target> <command args>"
+  echo "usage: $(basename $0) <command> <which target> [command args]"
 }
 
 exit.help() {
@@ -24,7 +23,7 @@ exit.404() {
 script.process_args $@
 script.validate_args $# 2
 
-target_cmd=$1
+target_cmd="$1"
 shift
 debug "target_cmd=$target_cmd"
 
@@ -55,4 +54,4 @@ fi
 shift
 debug "target=$target"
 
-$target_cmd "$target" $@
+$target_cmd $@ "$target"

@@ -105,12 +105,11 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 # ~/.bash_aliases, instead of adding them here directly.
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
 [ -f ~/.bashrc_main ] && . ~/.bashrc_main
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
+[ -f ~/.bash_aliases ] && . ~/.bash_aliases
 if [ -d ~/.bashrc.d ]; then
-  for f in $(find ~/.bashrc.d -type f); do
+  for f in $(find ~/.bashrc.d/ -type f); do
     mime_type="$(file -i $f | cut -d' ' -f2)"
+    debug "[f=($f), mime_type=($mime_type)]"
     [ -r $f ] && [[ $mime_type =~ ^text/(x-shellscript|plain)\;$ ]] && . $f
   done
   unset f

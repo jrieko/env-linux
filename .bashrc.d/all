@@ -1,4 +1,5 @@
 #!/bin/bash
+debug "file: ${BASH_SOURCE[0]}"
 
 alias ..="cd .."
 alias ...="cd ../.."
@@ -12,3 +13,5 @@ alias less="less -R"
 alias vim.bash=". ~/bin/.vim.bash"
 alias vim.which=".which vim"
 alias l.which=".which l"
+
+alias tail.latest="set -f && . ~/bin/.latest 'tail -f'"

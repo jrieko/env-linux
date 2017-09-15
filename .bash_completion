@@ -8,17 +8,17 @@ _alias_completion() {
 
   # check if there's already a completion function for the alias
   completion="$(complete -p $alias 2>/dev/null)"
-  debug "[alias=$1, cmd=$2] alias: $completion"
+  debug "[alias=($1), cmd=($2)] alias: ($completion)"
   if [[ -z $completion ]]; then
     # else get the target command's completion function
     completion="$(complete -p $cmd 2>/dev/null)"
-    debug "[alias=$1, cmd=$2] cmd: $completion"
+    debug "[alias=($1), cmd=($2)] cmd: ($completion)"
   fi
   if [[ -z $completion ]]; then
     # dynamic loader hasn't loaded this cmd yet
     _completion_loader "$cmd"
     completion="$(complete -p $cmd 2>/dev/null)"
-    debug "[alias=$1, cmd=$2] load: $completion"
+    debug "[alias=($1), cmd=($2)] load: ($completion)"
   fi
 
   # ensure completion function was found
@@ -46,6 +46,8 @@ _alias_completion "l" "ls"
 _alias_completion ".which" "which"
 _alias_completion "du.large" "du"
 _alias_completion "sc" "systemctl"
+_alias_completion ".latest" "ls"
+_alias_completion "tail.latest" "ls"
 
 # Implicitly define remaining aliases
 ifs_bak="$IFS"
@@ -54,7 +56,7 @@ for c in $(alias -p); do
   if [[ "$c" =~ $REGEX_ALIAS ]]; then
     _alias_completion ${BASH_REMATCH[1]} ${BASH_REMATCH[2]}
   else
-    debug "nope: $c"
+    debug "nope: ($c)"
   fi
 done
 # reset
