@@ -1,0 +1,3 @@
+#!/bin/bash
+
+ls -lah --color=always --group-directories-first "$@" | less -R --quit-if-one-screen --no-init
