@@ -1,1 +1,2 @@
+# @see https://github.com/gutenye/aurs/tree/master/k810-conf
 ACTION=="add", KERNEL=="hidraw*", SUBSYSTEM=="hidraw", KERNELS=="000[0-9]:046D:B319*", RUN+="/usr/sbin/k810_conf -d '%E{DEVNAME}' -f on"
