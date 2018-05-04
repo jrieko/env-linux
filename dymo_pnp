@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# on server: sudo apt install usb-modeswitch usb-modeswitch-data printer-driver-dymo
+wd="$(dirname $(readlink -f $0))"
+
+sudo apt install printer-driver-dymo glabels
+cd ~
+tar xzf $wd/dymo_pnp.tar.gz
+
