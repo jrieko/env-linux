@@ -1,9 +1,12 @@
 #!/bin/bash
-#debug=true
+debug=false
 
 # functions
+is_debug() {
+  [ "$debug" = true ]
+}
 debug() {
-  [ $debug ] && echo "[debug] $@"
+  [ "$debug" = true ] && echo "[debug] $@"
 }
 export -f debug
 debug "file: ${BASH_SOURCE[0]}"
@@ -15,7 +18,7 @@ export -f echo.err
 export include_dir=~/bin/functions
 export error_include=254
 include_resolve() {
-  [ $debug ] && echo.err "[debug] include $1"
+  [ "$debug" = true ] && echo.err "[debug] include $1"
   [ $# != 1 ] || [ -z "$1" ] && echo.err "$0: syntax error. usage: include <name>" && return $error_include
   target="$include_dir/$1"
   [ ! -r $target ] && echo.err "$0: syntax error. include $1: file not found: $target" && return $error_include

@@ -13,10 +13,10 @@ exit.help() {
   exit 0
 }
 
-script.validate_args 1
+script.validate_args $# 1
 script.process_args $@
 
 target="$(readlink -f ~/bin)/$1"
 shift
 
-vim $target $@ && [ -N $target ] && chmod +x $target
+vim -f "$target" $@ && [ -N "$target" ] && chmod +x "$target"

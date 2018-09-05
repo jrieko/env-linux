@@ -1,0 +1,22 @@
+#!/bin/bash -i
+
+include script
+
+usage() {
+  echo "usage: $(basename $0) <file>"
+}
+
+exit.help() {
+  echo "Edit a file then git-add it"
+  echo ""
+  usage
+  exit 0
+}
+
+script.validate_args $# 1
+script.process_args $@
+
+target="$(readlink -f $1)"
+shift
+debug "target=${target}"
+vim -f "$target" $@ && [ -N "$target" ] && git add --verbose "$target"
