@@ -1,3 +1,11 @@
+#!/bin/bash
+
 debug "file: ${BASH_SOURCE[0]}"
-alias mount.gdrive="google-drive-ocamlfuse $(xdg-user-dir DOCUMENTS)"
+
+o=" -verbose"
+if is_debug; then
+  o=" -debug"
+fi
+
+alias mount.gdrive="google-drive-ocamlfuse ${o} $(xdg-user-dir DOCUMENTS)"
 alias umount.gdrive="fusermount -u $(xdg-user-dir DOCUMENTS)"
