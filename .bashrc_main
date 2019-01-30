@@ -5,6 +5,7 @@ debug=false
 is_debug() {
   [ "$debug" = true ]
 }
+export -f is_debug
 debug() {
   [ "$debug" = true ] && echo "[debug] $@"
 }
