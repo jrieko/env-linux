@@ -55,3 +55,7 @@ for src in $wd/etc/udev/rules.d/*; do
   debug "cp: $src"
   sudo cp -f $src /etc/udev/rules.d/
 done
+for src in $wd/etc/acpi/events/*; do
+  debug "cp: $src"
+  sudo cp -f $src /etc/acpi/events/
+done
