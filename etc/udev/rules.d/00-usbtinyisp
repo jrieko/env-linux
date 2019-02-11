@@ -1,0 +1,1 @@
+SUBSYSTEM=="usb",ATTRS{product}=="USBtiny",ATTRS{idProduct}=="0c9f",ATTRS{idVendor}=="1781",GROUP="plugdev",MODE="0664"

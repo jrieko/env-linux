@@ -1,0 +1,2 @@
+event=button[ /]lid
+action=logger -p user.info -t "acpid" "[events/lid_button] %e"

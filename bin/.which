@@ -1,0 +1,57 @@
+#!/bin/bash -i
+debug "file: ${BASH_SOURCE[0]}"
+include script
+
+error_404=254
+
+usage() {
+  echo "usage: $(basename $0) <command> <which target> [command args]"
+}
+
+exit.help() {
+  echo "Run a command on the file resolved by \`which\`."
+  echo ""
+  usage
+  exit 0
+}
+
+exit.404() {
+  echo.err "$1: command not found"
+  exit $error_404
+}
+
+script.process_args $@
+script.validate_args $# 2
+
+target_cmd="$1"
+shift
+debug "target_cmd=$target_cmd"
+
+target=$1
+debug "target=$target"
+# try to resolve aliases
+while ! $(which $target &> /dev/null) && [[ "$(type -t $target)" == "alias" ]]; do
+  [[ "$(alias $1)" =~ $REGEX_ALIAS ]] || exit.404 "$target"
+  target=${BASH_REMATCH[2]}
+  # account for `. script`
+  args="${BASH_REMATCH[3]}"
+  debug "target=$target"
+  debug "args=$args"
+done
+
+if [[ "$target" =~ ^(.|source|sh)$ ]]; then
+  target=$args
+  debug "target=$target"
+  target="$(readlink -f $target)"
+  debug "target=$target"
+  # TODO
+  echo.err "subshell targets not supported yet"
+else
+  # resolve the target to its path
+  target="$(which $target)"
+fi
+[ $? == 0 ] && [ -n "$target" ] || exit.404 "$1"
+shift
+debug "target=$target"
+
+$target_cmd $@ "$target"

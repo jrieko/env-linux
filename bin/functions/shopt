@@ -1,0 +1,5 @@
+#!/bin/bash
+debug "file: ${BASH_SOURCE[0]}"
+
+alias globoff="set -f"
+alias globon="set +f"

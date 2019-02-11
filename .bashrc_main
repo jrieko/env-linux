@@ -1,0 +1,31 @@
+#!/bin/bash
+debug=false
+
+# functions
+is_debug() {
+  [ "$debug" = true ]
+}
+export -f is_debug
+debug() {
+  [ "$debug" = true ] && echo "[debug] $@"
+}
+export -f debug
+debug "file: ${BASH_SOURCE[0]}"
+echo.err() {
+  >&2 echo $@
+}
+export -f echo.err
+
+export include_dir=~/bin/functions
+export error_include=254
+include_resolve() {
+  [ "$debug" = true ] && echo.err "[debug] include $1"
+  [ $# != 1 ] || [ -z "$1" ] && echo.err "$0: syntax error. usage: include <name>" && return $error_include
+  target="$include_dir/$1"
+  [ ! -r $target ] && echo.err "$0: syntax error. include $1: file not found: $target" && return $error_include
+  echo "$target"
+}
+export -f include_resolve
+alias include=". $include_dir/include"
+
+export REGEX_ALIAS="^alias ([^=]+)='([^[:blank:]]+)[[:blank:]]*(.*)'$"

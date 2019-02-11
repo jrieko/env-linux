@@ -1,0 +1,61 @@
+#!/bin/bash
+
+wd="$(dirname $(readlink -f $0))"
+. $wd/.bashrc_main
+
+exit.unaccepted() {
+  debug "unaccepted"
+  exit 10
+}
+
+proceed=false
+while ! [ $proceed ]; do
+read -p "WARNING: this is a destructive installation and will delete your existing bashrc. Continue? (Y,n)" proceed
+  case "$proceed" in
+    [Nn])
+      exit.unaccepted
+      ;;
+    [Yy])
+      debug "accepted"
+      proceed=true
+      ;;
+    '')
+      debug "default: accepted"
+      proceed=true
+      ;;
+    *)
+      echo "Invalid input: $proceed"
+      proceed=false
+      ;;
+  esac
+done
+
+cd ~/
+
+declare -a srcs
+srcs=( .bash_completion .bash_completion.d .bashrc .bashrc.d .bashrc_main )
+for src in "${srcs[@]}"; do
+  debug "ln: $wd/$src"
+  rm -fr $src
+  ln -s $wd/$src
+done
+
+cd bin
+for src in $(ls -A $wd/bin/); do
+  debug "ln: $wd/bin/$src"
+  rm -fr $src
+  ln -s $wd/bin/$src
+done
+
+for src in $wd/etc/profile.d/*; do
+  debug "cp: $src"
+  sudo cp -f $src /etc/profile.d/
+done
+for src in $wd/etc/udev/rules.d/*; do
+  debug "cp: $src"
+  sudo cp -f $src /etc/udev/rules.d/
+done
+for src in $wd/etc/acpi/events/*; do
+  debug "cp: $src"
+  sudo cp -f $src /etc/acpi/events/
+done

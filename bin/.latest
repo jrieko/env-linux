@@ -1,0 +1,37 @@
+#!/bin/bash
+debug "file: ${BASH_SOURCE[0]}"
+include shopt
+globon
+include script
+
+error_404=254
+
+usage() {
+  echo "usage: $(basename $0) <command> <path pattern> [command args]"
+}
+
+exit.help() {
+  echo "Run a command on the latest-modified file matching a pattern."
+  echo ""
+  usage
+  exit 0
+}
+
+exit.404() {
+  echo.err "$1: command not found"
+  exit $error_404
+}
+
+script.process_args $@
+script.validate_args $# 2
+
+target_cmd="$1"
+shift
+debug "target_cmd=($target_cmd)"
+
+debug "path pattern=($1)"
+target="$(ls -t $1 | head -n1)"
+shift
+debug "target=($target)"
+
+$target_cmd $@ "$target"

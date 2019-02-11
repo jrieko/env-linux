@@ -1,0 +1,2 @@
+SUBSYSTEM=="block", KERNEL=="sda1", MODE="0664"
+SUBSYSTEM=="block", KERNEL=="sda[2345]", GROUP="windows", MODE="0664"

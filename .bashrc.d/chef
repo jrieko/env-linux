@@ -1,0 +1,5 @@
+debug "file: ${BASH_SOURCE[0]}"
+alias chef.gc="chef generate cookbook"
+alias chef.gr="chef generate recipe"
+alias chef.gl="chef generate lwrp"
+alias chef.ga="chef generate lwrp"

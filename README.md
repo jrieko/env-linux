@@ -1,2 +1,2 @@
-# chef-linux
-Chef cookbook configures an environment for linux hosts.
+# env-linux
+Deploy personal environment for linux hosts.

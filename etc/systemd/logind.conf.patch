@@ -1,0 +1,18 @@
+--- logind.conf	2019-01-31 11:41:22.098213031 -0500
++++ /etc/systemd/logind.conf	2019-01-31 11:29:44.561015925 -0500
+@@ -21,11 +21,11 @@
+ HandlePowerKey=suspend
+ HandleSuspendKey=suspend
+ HandleHibernateKey=suspend
+-HandleLidSwitch=lock
++HandleLidSwitch=ignore
+ HandleLidSwitchDocked=ignore
+-PowerKeyIgnoreInhibited=yes
+-SuspendKeyIgnoreInhibited=yes
+-HibernateKeyIgnoreInhibited=yes
++PowerKeyIgnoreInhibited=no
++SuspendKeyIgnoreInhibited=no
++HibernateKeyIgnoreInhibited=no
+ LidSwitchIgnoreInhibited=yes
+ #HoldoffTimeoutSec=30s
+ #IdleAction=ignore
