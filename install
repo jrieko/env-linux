@@ -33,7 +33,7 @@ done
 cd ~/
 
 declare -a srcs
-srcs=( .bash_completion .bash_completion.d .bashrc .bashrc.d .bashrc_main )
+srcs=( .bash_completion .bash_completion.d .bashrc .bashrc.d .bashrc_main .vimrc .vim )
 for src in "${srcs[@]}"; do
   debug "ln: $wd/$src"
   rm -fr $src
@@ -59,3 +59,7 @@ for src in $wd/etc/acpi/events/*; do
   debug "cp: $src"
   sudo cp -f $src /etc/acpi/events/
 done
+
+apt install dconf-cli
+bash -c "$(wget -qO- https://raw.githubusercontent.com/Mayccoll/Gogh/master/themes/chalkboard.sh)"
+
