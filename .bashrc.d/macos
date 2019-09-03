@@ -1,0 +1,4 @@
+#!/bin/bash
+debug "file: ${BASH_SOURCE[0]}"
+
+export CLICOLOR=1

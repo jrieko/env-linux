@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 debug "file: ${BASH_SOURCE[0]}"
+return 0
 
 export PATH="$(readlink -f ~/bin/rbenv/bin):$PATH"
 eval "$(rbenv init -)"

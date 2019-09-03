@@ -2,6 +2,8 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
+export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
@@ -108,7 +110,7 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 [ -f ~/.bash_aliases ] && . ~/.bash_aliases
 if [ -d ~/.bashrc.d ]; then
   for f in $(find ~/.bashrc.d/ -type f); do
-    mime_type="$(file -i $f | cut -d' ' -f2)"
+    mime_type="$(file -I $f | cut -d' ' -f2)"
     debug "[f=($f), mime_type=($mime_type)]"
     [ -r $f ] && [[ $mime_type =~ ^text/(x-shellscript|plain)\;$ ]] && . $f
   done

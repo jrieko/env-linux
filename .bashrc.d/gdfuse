@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 debug "file: ${BASH_SOURCE[0]}"
+return 0
 
 o=" -verbose"
 if is_debug; then

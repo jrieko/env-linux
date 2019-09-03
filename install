@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 
+brew install coreutils || exit 1
+export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+
 wd="$(dirname $(readlink -f $0))"
-. $wd/.bashrc_main
+. $wd/.bashrc_main || exit 1
 
 exit.unaccepted() {
   debug "unaccepted"
@@ -49,17 +52,6 @@ done
 
 for src in $wd/etc/profile.d/*; do
   debug "cp: $src"
+  sudo mkdir -p /etc/profile.d/
   sudo cp -f $src /etc/profile.d/
 done
-for src in $wd/etc/udev/rules.d/*; do
-  debug "cp: $src"
-  sudo cp -f $src /etc/udev/rules.d/
-done
-for src in $wd/etc/acpi/events/*; do
-  debug "cp: $src"
-  sudo cp -f $src /etc/acpi/events/
-done
-
-apt install dconf-cli
-bash -c "$(wget -qO- https://raw.githubusercontent.com/Mayccoll/Gogh/master/themes/chalkboard.sh)"
-

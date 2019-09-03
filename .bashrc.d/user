@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 debug "file: ${BASH_SOURCE[0]}"
 
-export USER_EMAIL="jen.rieko@gmail.com"
-export USER_FULL_NAME="$(getent passwd $USER | cut -d ':' -f 5)"
+export USER_EMAIL="tyjenn@amazon.com"
+export USER_FULL_NAME="Jenny Taylor"
