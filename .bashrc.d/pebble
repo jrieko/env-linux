@@ -1,3 +1,3 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 export PATH="$PATH:~/bin/pebble/pebble-sdk-4.5-linux64/bin"

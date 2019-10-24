@@ -1,4 +1,4 @@
-#!/bin/bash -i
+#!/usr/bin/env bash -i
 debug "file: ${BASH_SOURCE[0]}"
 include script
 

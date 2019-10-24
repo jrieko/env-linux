@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # on server: sudo apt install usb-modeswitch usb-modeswitch-data printer-driver-dymo
 wd="$(dirname $(readlink -f $0))"

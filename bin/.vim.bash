@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 error_usage=1
 
