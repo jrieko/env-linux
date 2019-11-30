@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 
-CLICOLOR_FORCE=1 ls -lahG "$@" | less -R --quit-if-one-screen --no-init
+#CLICOLOR_FORCE=1 ls -lahG "$@" | less -R --quit-if-one-screen --no-init
+ls -lah --color=always --group-directories-first "$@" | less -R --quit-if-one-screen --no-init
