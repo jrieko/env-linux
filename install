@@ -33,6 +33,7 @@ read -p "WARNING: this is a destructive installation and will delete your existi
   esac
 done
 
+# ~/ actions
 cd ~/
 
 declare -a srcs
@@ -43,6 +44,10 @@ for src in "${srcs[@]}"; do
   ln -s $wd/$src
 done
 
+# workaround for https://github.com/zeit/hyper/issues/1460
+tic -o .terminfo $wd/xterm-256color.terminfo
+
+# ~/bin/ actions
 cd bin
 for src in $(ls -A $wd/bin/); do
   debug "ln: $wd/bin/$src"

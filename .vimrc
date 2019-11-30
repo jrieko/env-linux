@@ -6,7 +6,7 @@ let g:jellybeans_overrides = {
 if has('termguicolors') && &termguicolors
     let g:jellybeans_overrides['background']['guibg'] = 'none'
 endif
-let g:jellybeans_use_term_italics = 0
+let g:jellybeans_use_term_italics = 1
 
 filetype plugin indent on
 syntax on
