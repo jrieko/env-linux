@@ -140,6 +140,38 @@ module.exports = {
     webGLRenderer: false,
 
     // for advanced config flags please refer to https://hyper.is/#cfg
+
+    // plugins['hyper-pane']
+    paneNavigation: {
+      debug: false,
+      hotkeys: {
+        navigation: {
+          up: 'ctrl+shift+up',
+          down: 'ctrl+shift+down',
+          left: 'ctrl+shift+left',
+          right: 'ctrl+shift+right'
+        },
+        jump_prefix: 'ctrl+shift', // completed with 1-9 digits
+        permutation_modifier: 'alt', // Added to jump and navigation hotkeys for pane permutation
+        maximize: 'ctrl+shift+f'
+      },
+      showIndicators: true, // Show pane number
+      indicatorPrefix: '⌃⇧', // Will be completed with pane number
+      indicatorStyle: { // Added to indicator <div>
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        fontSize: '10px'
+      },
+      focusOnMouseHover: false,
+      inactivePaneOpacity: 0.7 // Set to 1 to disable inactive panes dimming
+    },
+
+    // plugins['hyper-opacity']
+    opacity: {
+      focus: 1,
+      blur: 0.7
+    }
   },
 
   // a list of plugins to fetch and install from npm
@@ -148,7 +180,16 @@ module.exports = {
   //   `hyperpower`
   //   `@company/project`
   //   `project#1.0.1`
-  plugins: [],
+  plugins: [
+    'hypercwd',
+    'hyper-search',
+    'hyper-pane',
+    'hyper-opacity',
+
+    // toy plugins
+    // 'hyper-letters',
+    // 'hyperpower',
+  ],
 
   // in development, you can create a directory under
   // `~/.hyper_plugins/local/` and include it here
