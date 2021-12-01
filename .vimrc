@@ -10,9 +10,12 @@ let g:jellybeans_use_term_italics = 1
 
 filetype plugin indent on
 syntax on
+set formatoptions-=t
 set tabstop=2 shiftwidth=2 expandtab
 " <Ctrl-l> redraws the screen and removes any search highlighting.
 nnoremap <silent> <C-l> :nohl<CR><C-l>
+" search-replace selected text
+vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
 set ignorecase
 set smartcase
 set splitbelow

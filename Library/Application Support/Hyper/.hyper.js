@@ -11,10 +11,12 @@ module.exports = {
     scrollback: 10000,
 
     // default font size in pixels for all tabs
-    fontSize: 12,
+    fontSize: 13,
 
     // font family with optional fallbacks
-    fontFamily: 'Menlo, "DejaVu Sans Mono", Consolas, "Lucida Console", monospace',
+    //fontFamily: '"Monofur Nerd Font", Menlo, "DejaVu Sans Mono", Consolas, "Lucida Console", monospace',
+    fontFamily: '"mononoki Nerd Font", Menlo, "DejaVu Sans Mono", Consolas, "Lucida Console", monospace',
+    //fontFamily: '"FantasqueSansMono Nerd Font", Menlo, "DejaVu Sans Mono", Consolas, "Lucida Console", monospace',
 
     // default font weight: 'normal' or 'bold'
     fontWeight: 'normal',
@@ -45,7 +47,7 @@ module.exports = {
 
     // terminal background color
     // opacity is only supported on macOS
-    backgroundColor: '#0d0e0c98',
+    backgroundColor: '#0d0e0c',
 
     // terminal selection color
     selectionColor: 'hsl(259.7,27.1%,70%,0.3)',
@@ -90,7 +92,7 @@ module.exports = {
       lightBlue: '#aaaadb',
       lightMagenta: '#dbaada',
       lightCyan: '#aadadb',
-      lightWhite: '#FFFFFF',
+      lightWhite: '#ffffff',
     },
 
     // the shell to run when spawning a new session (i.e. /usr/local/bin/fish)
@@ -164,14 +166,22 @@ module.exports = {
         fontSize: '10px'
       },
       focusOnMouseHover: false,
-      inactivePaneOpacity: 0.7 // Set to 1 to disable inactive panes dimming
+      inactivePaneOpacity: 0.8 // Set to 1 to disable inactive panes dimming
     },
 
     // plugins['hyper-opacity']
     opacity: {
-      focus: 1,
+      focus: 0.85,
       blur: 0.7
-    }
+    },
+
+    // plugins['hyper-statusline']
+    hyperStatusLine: {
+      // Change Git Dirty Color. Expected value is CSS color
+      //dirtyColor: 'salmon',
+      //aheadColor: 'ivory',
+      //footerTransparent: false,
+    },
   },
 
   // a list of plugins to fetch and install from npm
@@ -185,8 +195,10 @@ module.exports = {
     'hyper-search',
     'hyper-pane',
     'hyper-opacity',
+    //'hyper-statusline',
 
     // toy plugins
+    // 'gitrocket',
     // 'hyper-letters',
     // 'hyperpower',
   ],
@@ -198,8 +210,8 @@ module.exports = {
 
   keymaps: {
     "window:devtools": "ctrl+shift+i",
-    "window:reload": "ctrl+shift+r",
-    "window:reloadFull": "ctrl+shift+f5",
+    "window:reload": "ctrl+shift+f5",
+    "window:reloadFull": "ctrl+alt+shift+f5",
     "window:preferences": "ctrl+,",
     "zoom:reset": "ctrl+0",
     "zoom:in": "ctrl+=",
@@ -219,8 +231,8 @@ module.exports = {
     "tab:jump:prefix": "ctrl",
     "pane:next": "ctrl+tab",
     "pane:prev": "ctrl+shift+tab",
-    "pane:splitVertical": "ctrl+shift+d",
-    "pane:splitHorizontal": "ctrl+shift+e",
+    "pane:splitRight": "ctrl+shift+d",
+    "pane:splitDown": "ctrl+shift+s",
     "pane:close": "ctrl+shift+w",
     "editor:undo": "ctrl+shift+z",
     "editor:redo": "ctrl+shift+y",

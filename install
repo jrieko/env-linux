@@ -1,14 +1,28 @@
 #!/usr/bin/env bash
 
-brew install bash coreutils bash-completion@2 || exit 1
+set -e
+is_debug() {
+  [ "$debug" = true ]
+}
+if is_debug; then
+  set -x
+  DARG="--debug"
+  VARG="--verbose"
+fi
+
+# pre-reqs
+brew update $DARG
+brew upgrade $DARG
+brew install $DARG bash coreutils bash-completion@2 less lesspipe
 export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
 
 wd="$(dirname $(readlink -f $0))"
-. $wd/.bashrc_main || exit 1
+. $wd/.bashrc_main
+
 
 exit.unaccepted() {
   debug "unaccepted"
-  exit 10
+  exit -1
 }
 
 proceed=false
@@ -33,6 +47,9 @@ read -p "WARNING: this is a destructive installation and will delete your existi
   esac
 done
 
+brew tap $DARG homebrew/cask-fonts
+brew cask install $DARG font-monokai-nerd-font
+
 # ~/ actions
 cd ~/
 
@@ -40,28 +57,47 @@ declare -a srcs
 srcs=( .bash_completion .bash_completion.d .bashrc .bashrc.d .bashrc_main .vimrc .vim )
 for src in "${srcs[@]}"; do
   debug "ln: $wd/$src"
-  rm -fr $src
-  ln -s $wd/$src
+  rm $VARG -fr $src
+  ln $VARG -s $wd/$src
 done
 
+# hyper terminal
+brew cask install $DARG hyper
+mkdir $VARG -p ~/Library/Application\ Support/Hyper
+cd ~/Library/Application\ Support/Hyper
+for src in $(ls -A $wd/Library/Application\ Support/Hyper/); do
+  rm $VARG -fr $src
+  ln $VARG -s $wd/Library/Application\ Support/Hyper/$src
+done
+# 3.0.2 still needs it here it seems
+cd ~/
+ln $VARG -s Library/Application\ Support/Hyper/.hyper.js
 # workaround for https://github.com/zeit/hyper/issues/1460
 tic -o .terminfo $wd/xterm-256color.terminfo
 
 # ~/bin/ actions
-cd bin
+cd ~/bin
 for src in $(ls -A $wd/bin/); do
   debug "ln: $wd/bin/$src"
-  rm -fr $src
-  ln -s $wd/bin/$src
+  rm $VARG -fr $src
+  ln $VARG -s $wd/bin/$src
 done
 
 for src in $wd/etc/profile.d/*; do
   debug "cp: $src"
-  sudo mkdir -p /etc/profile.d/
-  sudo cp -f $src /etc/profile.d/
+  sudo mkdir $VARG -p /etc/profile.d/
+  sudo cp $VARG -f $src /etc/profile.d/
 done
 
 if [ -f $(brew --prefix)/etc/profile.d/bash_completion.sh ]; then
-  ln -s $(brew --prefix)/etc/profile.d/bash_completion.sh /etc/profile.d/bash_completion.sh
-  ln -s $(brew --prefix)/etc/bash_completion.d /etc/bash_completion.d
+  ln $VARG -s $(brew --prefix)/etc/profile.d/bash_completion.sh /etc/profile.d/bash_completion.sh
+  ln $VARG -s $(brew --prefix)/etc/bash_completion.d /etc/bash_completion.d
 fi
+
+# powerline actions
+brew install $DARG python@3
+pip3 install $VARG psutil pyuv powerline
+cd ~/.config
+ln -s $wd/.config/powerline
+cd $(python3 -c "import os, powerline; print(os.path.dirname(powerline.__file__))")
+# TODO

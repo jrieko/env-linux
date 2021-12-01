@@ -18,22 +18,22 @@ exit.help() {
 }
 
 exit.perms() {
-  echo.err "permission denied: $1"
+  echo_err "permission denied: $1"
   exit $error_perms
 }
 
 exit.type() {
-  echo.err "unknown archive type: $1"
+  echo_err "unknown archive type: $1"
   exit $error_type
 }
 
 exit.404_file() {
-  echo.err "file not found: $1"
+  echo_err "file not found: $1"
   exit $error_404
 }
 
 exit.404_dir() {
-  echo.err "directory not found: $1"
+  echo_err "directory not found: $1"
   exit $error_404
 }
 

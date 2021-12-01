@@ -15,3 +15,4 @@ alias vim.which=".which vim"
 alias l.which=".which l"
 
 alias tail.latest="set -f && . ~/bin/.latest 'tail -f'"
+

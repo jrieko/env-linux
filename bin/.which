@@ -16,7 +16,7 @@ exit.help() {
 }
 
 exit.404() {
-  echo.err "$1: command not found"
+  echo_err "$1: command not found"
   exit $error_404
 }
 
@@ -45,7 +45,7 @@ if [[ "$target" =~ ^(.|source|sh)$ ]]; then
   target="$(readlink -f $target)"
   debug "target=$target"
   # TODO
-  echo.err "subshell targets not supported yet"
+  echo_err "subshell targets not supported yet"
 else
   # resolve the target to its path
   target="$(which $target)"

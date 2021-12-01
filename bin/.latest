@@ -18,7 +18,7 @@ exit.help() {
 }
 
 exit.404() {
-  echo.err "$1: command not found"
+  echo_err "$1: command not found"
   exit $error_404
 }
 

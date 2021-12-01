@@ -1,31 +1,45 @@
 #!/usr/bin/env bash
-debug=false
+_debug=false
+#debug=true
+echo 3
 
 # functions
 is_debug() {
-  [ "$debug" = true ]
+  [ "$_debug" = true ]
 }
 export -f is_debug
 debug() {
-  [ "$debug" = true ] && echo "[debug] $@"
+  is_debug && echo "[debug] $@"
 }
 export -f debug
+echo 4
 debug "file: ${BASH_SOURCE[0]}"
-echo.err() {
+
+echo 5
+is_bash() {
+  debug "`ps -p$$ -ocommand=`"
+  ( ps -p$$ -ocommand= | grep -Eq '^(/usr(/local)?)?(/bin/)?bash' )
+}
+export -f is_bash
+
+echo_err() {
   >&2 echo $@
 }
-export -f echo.err
+export -f echo_err
 
 export include_dir=~/bin/functions
 export error_include=254
 include_resolve() {
-  [ "$debug" = true ] && echo.err "[debug] include $1"
-  [ $# != 1 ] || [ -z "$1" ] && echo.err "$0: syntax error. usage: include <name>" && return $error_include
+  [ "$debug" = true ] && echo_err "[debug] include $1"
+  [ $# != 1 ] || [ -z "$1" ] && echo_err "$0: syntax error. usage: include <name>" && return $error_include
   target="$include_dir/$1"
-  [ ! -r $target ] && echo.err "$0: syntax error. include $1: file not found: $target" && return $error_include
+  [ ! -r $target ] && echo_err "$0: syntax error. include $1: file not found: $target" && return $error_include
   echo "$target"
 }
 export -f include_resolve
-alias include=". $include_dir/include"
+include() {
+  . $include_dir/include
+}
+export -f include
 
 export REGEX_ALIAS="^alias ([^=]+)='([^[:blank:]]+)[[:blank:]]*(.*)'$"

@@ -1,21 +1,80 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 export PATH="$(readlink -f ~/.toolbox/bin):$PATH"
 export BRAZIL_WORKSPACE_DEFAULT_LAYOUT=short
-alias bb=brazil-build
 alias bba='brazil-build apollo-pkg'
 alias bre='brazil-runtime-exec'
 alias brc='brazil-recursive-cmd'
 alias bws='brazil ws'
-alias bwsuse='bws use --gitMode -p'
+alias bvs='brazil vs'
+alias bgetvs="bws show | grep 'Version Set:' | tr -s ' ' | cut -s -d ' ' -f 4 | cut -s -d '@' -f 1"
+#alias bbcr='bb clean && bb release'
+alias bwsuse='bws use -p'
 alias bwscreate='bws create -n'
-alias bbr='brc brazil-build'
+alias bbr='bb release'
+#alias bbr='brc brazil-build'
 alias bball='brc --allPackages'
 alias bbb='brc --allPackages brazil-build'
-alias bbra='bbr apollo-pkg'
+alias bvs-dep='bvs printdependencies -vs $(bgetvs) --consumers -p'
+alias bvs-clean='bvs removemajorversions -vs $(bgetvs)'
+#alias bpc='brazil-package-cache disable_edge_cache && brazil-package-cache stop --debug && brazil-package-cache enable_edge_cache && brazil-package-cache start --debug'
+alias bpc='brazil-package-cache stop --debug && brazil-package-cache start --debug'
+alias bbl='npm_config_prefix=$(brazil-path workspace-root)/env; bb link'
 
 alias sam="brazil-build-tool-exec sam"
 export SAM_ASSUME_ACCOUNT_ID="918395798573"
 
 alias mwcert="ssh-keygen -L -f ~/.ssh/id_rsa-cert.pub"
+alias mw="mwinit -s && date"
 
+alias odin="ssh -L 2009:localhost:2009 dev"
+
+bbcr() {
+  if [ -e build.gradle ]; then
+    bb clean release
+  else
+    bb clean && bb release
+  fi
+}
+export -f bbcr
+
+adaup() {
+  ada cred update --once --profile=sb-$1 --account=sb-$1
+}
+export -f adaup
+
+alias adaup-wasabi="ada cred update --once --account=sb-wasabi-beta"
+alias adaup-bento-beta="ada cred update --once --account=sb-bento-beta"
+alias adaup-katsu="ada cred update --once --profile=sb-katsu-beta --account=sb-katsu-beta"
+alias adaup-nori="ada cred update --once --account=sb-nori-beta-iad"
+
+__bdep() {
+  target=$1
+  version=$2
+  brazil-graph paths-to -g run -d $target-$version
+}
+bdep() {
+  target=$1
+  version=$2
+  if [ -z $version ]; then
+    for version in 1.{0..9}; do
+      __bdep $target $version
+    done
+  fi
+  __bdep $target $version
+}
+export -f bdep
+
+bbcdkdeploy() {
+  [ -n $1 ] || return 1;
+  bb deploy:assets $1 && bb cdk deploy -e $1
+}
+export -f bbcdkdeploy
+
+#TODO fix for non-bash, function with .
+if is_bash; then
+  iap_heap() {
+    rexec iap.$1 'sudo -u iapuser apollo/env/IAPRspWebsite/jdk/bin/jmap -heap `pgrep -f com.amazon.rsp.service.Service -u iapuser`'
+  }
+  export -f iap_heap
+fi
