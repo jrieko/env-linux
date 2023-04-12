@@ -16,3 +16,5 @@ alias l.which=".which l"
 
 alias tail.latest="set -f && . ~/bin/.latest 'tail -f'"
 
+alias find-broken-symlinks="find -L . -type l"
+

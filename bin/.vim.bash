@@ -22,7 +22,7 @@ exit.help() {
 [ "$1" == "-h" ] || [ "$1" == "--help" ] && exit.help
 
 if [ -n "$1" ]; then
-  target="$1"
+  target=~/.bashrc.d/$1
   shift
 else
   target=~/.bashrc

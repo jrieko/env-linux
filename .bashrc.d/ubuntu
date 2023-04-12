@@ -1,0 +1,8 @@
+#!/bin/bash
+debug "file: ${BASH_SOURCE[0]}"
+
+#JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8-default/Contents/Home
+#export PATH=$JAVA_HOME/bin:$PATH
+
+# htop
+alias top=htop

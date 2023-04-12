@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 _debug=false
 #debug=true
-echo 3
 
 # functions
 is_debug() {
@@ -12,10 +11,8 @@ debug() {
   is_debug && echo "[debug] $@"
 }
 export -f debug
-echo 4
 debug "file: ${BASH_SOURCE[0]}"
 
-echo 5
 is_bash() {
   debug "`ps -p$$ -ocommand=`"
   ( ps -p$$ -ocommand= | grep -Eq '^(/usr(/local)?)?(/bin/)?bash' )

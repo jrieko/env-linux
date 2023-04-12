@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
+debug "file: ${BASH_SOURCE[0]}"
 
 export PATH="$(readlink -f ~/.toolbox/bin):$PATH"
+# disable because too slow
+#source /home/ANT.AMAZON.COM/tyjenn/.brazil_completion/bash_completion
 export BRAZIL_WORKSPACE_DEFAULT_LAYOUT=short
+export PATH="$(readlink -f ~/.local/share/cr-extension/bin):$PATH"
 alias bba='brazil-build apollo-pkg'
 alias bre='brazil-runtime-exec'
 alias brc='brazil-recursive-cmd'
@@ -19,18 +23,19 @@ alias bvs-dep='bvs printdependencies -vs $(bgetvs) --consumers -p'
 alias bvs-clean='bvs removemajorversions -vs $(bgetvs)'
 #alias bpc='brazil-package-cache disable_edge_cache && brazil-package-cache stop --debug && brazil-package-cache enable_edge_cache && brazil-package-cache start --debug'
 alias bpc='brazil-package-cache stop --debug && brazil-package-cache start --debug'
+alias bpc-clean='brazil-package-cache clean'
 alias bbl='npm_config_prefix=$(brazil-path workspace-root)/env; bb link'
 
 alias sam="brazil-build-tool-exec sam"
 export SAM_ASSUME_ACCOUNT_ID="918395798573"
 
 alias mwcert="ssh-keygen -L -f ~/.ssh/id_rsa-cert.pub"
-alias mw="mwinit -s && date"
+alias mw="mwinit -s -f && date"
 
 alias odin="ssh -L 2009:localhost:2009 dev"
 
 bbcr() {
-  if [ -e build.gradle ]; then
+  if [ -e build.gradle* ]; then
     bb clean release
   else
     bb clean && bb release
@@ -51,7 +56,7 @@ alias adaup-nori="ada cred update --once --account=sb-nori-beta-iad"
 __bdep() {
   target=$1
   version=$2
-  brazil-graph paths-to -g run -d $target-$version
+  brazil-graph paths-to -g testrun -d $target-$version
 }
 bdep() {
   target=$1
@@ -78,3 +83,11 @@ if is_bash; then
   }
   export -f iap_heap
 fi
+
+#sudo apt update
+#sudo acme --evaluate
+#sudo evaluate 
+#acme --karl-status
+#acme --compliance-status -v
+
+

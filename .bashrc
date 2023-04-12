@@ -2,8 +2,6 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
-export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
-
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
@@ -106,15 +104,11 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
-echo 10
 [ -f ~/.bashrc_main ] && . ~/.bashrc_main
-echo 11
 [ -f ~/.bash_aliases ] && . ~/.bash_aliases
-echo 12
 if [ -d ~/.bashrc.d ]; then
   for f in $(find ~/.bashrc.d/ -type f); do
-    echo 13
-    mime_type="$(file -I $f | cut -d' ' -f2)"
+    mime_type="$(file -i $f | cut -d' ' -f2)"
     #debug "[f=($f), mime_type=($mime_type)]"
     [ -r $f ] && [[ $mime_type =~ ^text/(x-shellscript|plain)\;$ ]] && . $f
   done
@@ -138,4 +132,9 @@ if [ -x /usr/bin/mint-fortune ]; then
 fi
 
 export PATH="$(readlink -f ~/bin):$PATH"
-export LESSOPEN="|/usr/local/bin/lesspipe.sh %s" LESS_ADVANCED_PREPROCESSOR=1
+#export LESSOPEN="|/usr/local/bin/lesspipe.sh %s" LESS_ADVANCED_PREPROCESSOR=1
+
+# remove trailing :
+PATH="$(echo $PATH | tr -s :)"
+export PATH="${PATH%:}"
+

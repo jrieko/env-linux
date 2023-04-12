@@ -1,3 +1,4 @@
+"execute pathogen#infect()
 
 colorscheme jellybeans
 let g:jellybeans_overrides = {
@@ -22,6 +23,18 @@ set splitbelow
 set splitright
 set number
 set backspace=indent,eol,start  " more powerful backspacing
+set scrolloff=20
+
+" diff
+if &diff
+  nnoremap ] /<<<<<<< <cr>
+  nnoremap [ N
+  nnoremap <silent> dp V:diffput<cr>
+  nnoremap <silent> dg V:diffget<cr>
+  xnoremap <silent> dp diffput<cr>
+  xnoremap <silent> dg diffget<cr>
+  nnoremap <silent> du :diffupdate<cr>
+endif
 
 " Syntastic
 "set statusline+=%#warningmsg#
